@@ -116,6 +116,9 @@ BIMER_ENRICH_BATCH_SIZE: int = _get_int("BIMER_ENRICH_BATCH_SIZE", 100)
 # ---------------------------------------------------------------------------
 
 TARGET_YEAR: int = _get_int("TARGET_YEAR", 2026)
+PIPELINE_TZ: str = _get_str("PIPELINE_TZ", "America/Sao_Paulo")
+PIPELINE_START_DATE: str = _get_str("PIPELINE_START_DATE")
+PIPELINE_END_DATE: str = _get_str("PIPELINE_END_DATE")
 LOG_PREFIX: str = _get_str("PIPELINE_LOG_PREFIX", "[COMPRAS]")
 SHOW_PROGRESS: bool = _get_bool("PIPELINE_SHOW_PROGRESS", True)
 
@@ -288,6 +291,12 @@ def check_required_envs() -> None:
         missing.append("MONDAY_BOARD_ID")
     if not N8N_SUMMARY_WEBHOOK_URL:
         missing.append("N8N_SUMMARY_WEBHOOK_URL")
+    if not PIPELINE_TZ:
+        missing.append("PIPELINE_TZ")
+    if not PIPELINE_START_DATE:
+        missing.append("PIPELINE_START_DATE")
+    if not PIPELINE_END_DATE:
+        missing.append("PIPELINE_END_DATE")
     if missing:
         raise EnvironmentError(f"Variaveis obrigatorias nao configuradas: {missing}")
 
@@ -299,6 +308,9 @@ def check_required_envs() -> None:
     print(f"{LOG_PREFIX} [INFO] MONDAY_BOARD_ID    : {_mask_id(MONDAY_BOARD_ID)}")
     print(f"{LOG_PREFIX} [INFO] MONDAY_API_VERSION : {MONDAY_API_VERSION}")
     print(f"{LOG_PREFIX} [INFO] TARGET_YEAR        : {TARGET_YEAR}")
+    print(f"{LOG_PREFIX} [INFO] PIPELINE_TZ        : {PIPELINE_TZ}")
+    print(f"{LOG_PREFIX} [INFO] PIPELINE_START_DATE: {PIPELINE_START_DATE}")
+    print(f"{LOG_PREFIX} [INFO] PIPELINE_END_DATE  : {PIPELINE_END_DATE}")
     print(f"{LOG_PREFIX} [INFO] HTTP_MAX_RETRIES   : {HTTP_MAX_RETRIES}")
     print(f"{LOG_PREFIX} [INFO] HTTP_REQUEST_TIMEOUT: {HTTP_REQUEST_TIMEOUT}s")
     print(f"{LOG_PREFIX} [INFO] MONDAY_PAGE_SIZE   : {MONDAY_PAGE_SIZE}")
